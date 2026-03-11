@@ -20,8 +20,8 @@ export const getTransactions = async (userId, queryParams) => {
     sort = "-date",
   } = queryParams;
 
-  const pageNumber = Number(page);
-  const limitNumber = Number(limit);
+  const pageNumber = Number(page) || 1;
+  const limitNumber = Number(limit) || 10;
   const skip = (pageNumber - 1) * limitNumber;
 
   const query = { user: userId };
@@ -60,7 +60,14 @@ export const updateTransaction = async (userId, transactionId, data) => {
     throw new ApiError(404, "Transaction not found");
   }
 
-  const allowedUpdates = ["title", "amount", "type", "category", "note", "date"];
+  const allowedUpdates = [
+    "title",
+    "amount",
+    "type",
+    "category",
+    "note",
+    "date",
+  ];
 
   allowedUpdates.forEach((field) => {
     if (data[field] !== undefined) {

@@ -6,11 +6,15 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/users.routes.js";
 import transactionRoutes from "./routes/transaction.routes.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
+import exportRoutes from "./routes/export.routes.js";
 
 const app = express();
 
 // Global Middlewares
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true
+}));
 app.use(express.json());
 app.use(morgan("combined"));
 
@@ -26,7 +30,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/transactions", transactionRoutes);
-
+app.use("/api/export", exportRoutes);
 
 app.use(errorMiddleware);
 

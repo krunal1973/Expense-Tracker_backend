@@ -1,9 +1,9 @@
-// src/middlewares/error.middleware.js
-
 import ApiError from "../utils/ApiError.js";
 
 function errorMiddleware(err, req, res, next) {
-  // Ensure it's always an ApiError
+
+  console.error("ERROR:", err);
+
   let statusCode = 500;
   let message = "Internal Server Error";
   let errors = [];

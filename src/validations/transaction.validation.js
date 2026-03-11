@@ -16,17 +16,32 @@ export const createTransactionValidation = [
 
   body("category")
     .optional()
-    .trim(),
+    .trim()
+    .isString()
+    .withMessage("Category must be a string"),
 
   body("note")
     .optional()
-    .trim(),
+    .trim()
+    .isString()
+    .withMessage("Note must be a string"),
+
+  body("date")
+    .optional()
+    .isISO8601()
+    .withMessage("Date must be valid"),
 ];
 
 export const updateTransactionValidation = [
   param("id")
     .isMongoId()
     .withMessage("Invalid transaction ID"),
+
+  body("title")
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage("Title cannot be empty"),
 
   body("amount")
     .optional()
@@ -37,6 +52,23 @@ export const updateTransactionValidation = [
     .optional()
     .isIn(["income", "expense"])
     .withMessage("Type must be income or expense"),
+
+  body("category")
+    .optional()
+    .trim()
+    .isString()
+    .withMessage("Category must be a string"),
+
+  body("note")
+    .optional()
+    .trim()
+    .isString()
+    .withMessage("Note must be a string"),
+
+  body("date")
+    .optional()
+    .isISO8601()
+    .withMessage("Date must be valid"),
 ];
 
 export const getTransactionValidation = [
@@ -49,4 +81,30 @@ export const getTransactionValidation = [
     .optional()
     .isInt({ min: 1 })
     .withMessage("Limit must be a positive integer"),
+
+  query("type")
+    .optional()
+    .isIn(["income", "expense"])
+    .withMessage("Type must be income or expense"),
+
+  query("category")
+    .optional()
+    .trim()
+    .isString()
+    .withMessage("Category must be a string"),
+
+  query("startDate")
+    .optional()
+    .isISO8601()
+    .withMessage("Start date must be valid"),
+
+  query("endDate")
+    .optional()
+    .isISO8601()
+    .withMessage("End date must be valid"),
+
+  query("sort")
+    .optional()
+    .isString()
+    .withMessage("Sort must be a string"),
 ];
